@@ -15,7 +15,6 @@ on:
   release:
     types: [created]
     
-
 jobs:
   build:
 
@@ -47,8 +46,8 @@ jobs:
       run: mvn --version
 
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
-
+      run: mvn --batch-mode --file pom.xml --define maven.test.skip=true clean install
+      
     - name: Publish to GitHub Packages Apache Maven
       run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
       env:
