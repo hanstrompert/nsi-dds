@@ -41,6 +41,7 @@ jobs:
         echo "${{ env.SHA }} /tmp/apache-maven.tar.gz" | sha512sum -c -
         tar -xzf /tmp/apache-maven.tar.gz -C /usr/share/maven --strip-components=1
         rm -f /tmp/apache-maven.tar.gz
+        rm -f /usr/bin/mvn
         ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
         mvn --version
 
