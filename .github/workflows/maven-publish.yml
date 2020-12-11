@@ -37,7 +37,7 @@ jobs:
         BASE_URL: https://apache.osuosl.org/maven/maven-3/${MAVEN_VERSION}/binaries 
       run: |
         mkdir -p /usr/share/maven /usr/share/maven/ref
-        curl -fsSL -o /tmp/apache-maven.tar.gz ${{ env.BASE_URL }}/apache-maven-${{ ebv.MAVEN_VERSION }}-bin.tar.gz
+        curl -fsSL -o /tmp/apache-maven.tar.gz ${{ env.BASE_URL }}/apache-maven-${{ env.MAVEN_VERSION }}-bin.tar.gz
         echo "${{ env.SHA }} /tmp/apache-maven.tar.gz" | sha512sum -c -
         tar -xzf /tmp/apache-maven.tar.gz -C /usr/share/maven --strip-components=1
         rm -f /tmp/apache-maven.tar.gz
