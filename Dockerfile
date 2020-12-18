@@ -22,8 +22,11 @@ RUN chown -Rv safnari:safnari $HOME
 USER safnari:safnari
 
 WORKDIR $HOME/nsi-dds
-RUN mvn clean install -Dmaven.test.skip=true -Ddocker.nocache
+#RUN mvn -B clean install -Dmaven.test.skip=true -Ddocker.nocache
+RUN mvn -B clean install -Dmaven.test.skip=true
 RUN cp -Rv config target/dds.jar $HOME
+COPY m2_settings.xml $HOME/.m2/settings.xml
+RUN mvn -B deploy -Dmaven.test.skip=true
 
 #CMD /usr/bin/java \
 CMD java \
