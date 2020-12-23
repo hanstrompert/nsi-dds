@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  nsi-dds:
+    image: nsi-dds:latest
+    build: .
+    ports:
+      - '8401:8401'
+    volumes:
+      - type: bind
+        source: ./config
+        target: /config
+      - type: volume
+        source: cache
+        target: /config/cache
+      - type: volume
+        source: log
+        target: /var/log
+    networks:
+      - nsi-dds
+
+volumes:
+  log:
+  cache:
+
+networks:
+  nsi-dds:

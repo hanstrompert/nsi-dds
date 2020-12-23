@@ -34,23 +34,19 @@
 <tns:dds xmlns:tns="http://schemas.es.net/nsi/2014/03/dds/configuration"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <!-- we need to set this to the uPA's NSA ID so that the local networks are discovered correctly -->
-    <nsaId>urn:ogf:network:surfnet.nl:1990:nsa:bod7</nsaId>
+    <nsaId>urn:ogf:network:netherlight.net:2013:nsa:safnari</nsaId>
     <documents>config/documents</documents>
     <cache>config/cache</cache>
+    <repository>config/repository</repository>
     <expiryInterval>600</expiryInterval>
-    <baseURL>http://localhost:8401/discovery</baseURL>
+    <baseURL>http://localhost:8401/dds</baseURL>
+    <server address="localhost" port="8401" packageName="net.es.nsi.dds" />
     <!--
 	<peerURL type="application/vnd.ogf.nsi.dds.v1+xml">http://localhost:8400/discovery</peerURL>
-    -->
-
-    <peerURL type="application/vnd.ogf.nsi.nsa.v1+xml">https://bod2.surfnet.nl/nsa-discovery</peerURL>
-    <peerURL type="application/vnd.ogf.nsi.nsa.v1+xml">https://nsi.nordu.net:9443/NSI/discovery.xml</peerURL>
-    <peerURL type="application/vnd.ogf.nsi.nsa.v1+xml">http://62.217.127.133:8080/nsi_discovery_geant.xml</peerURL>
-
-    <!--
     	<peerURL type="application/vnd.ogf.nsi.nsa.v1+xml">http://62.217.124.244:8080/nsi_discovery_geant_all.xml</peerURL>
-    -->
-    <!--
 	<peerURL type="application/vnd.ogf.nsi.topology.v1+xml">https://raw.github.com/jeroenh/AutoGOLE-Topologies/master/master.xml</peerURL>
     -->
+    <peerURL type="application/vnd.ogf.nsi.nsa.v1+xml">https://nsi-aggr-west.es.net/nsa-discovery</peerURL>
+    <peerURL type="application/vnd.ogf.nsi.dds.v1+xml">https://nsi-aggr-west.es.net/discovery</peerURL>
+    <peerURL type="application/vnd.ogf.nsi.nsa.v1+xml">https://agg.netherlight.net/nsa-discovery</peerURL>
 </tns:dds>

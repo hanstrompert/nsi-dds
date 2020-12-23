@@ -1,5 +1,4 @@
-#FROM maven:3-openjdk-8-slim
-FROM openjdk:8-jdk-slim
+FROM openjdk:8-jdk-slim AS MAVEN_BUILD
 
 RUN apt-get update && apt-get -y install curl
 
@@ -14,24 +13,32 @@ RUN mkdir -p /usr/share/maven /usr/share/maven/ref \
   && rm -f /tmp/apache-maven.tar.gz \
   && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
 
-ENV HOME /home/safnari
+ENV BUILD_HOME /home/safnari
 
-COPY . $HOME/nsi-dds
-RUN groupadd -r safnari && useradd --home-dir $HOME --no-log-init -r -g safnari safnari
-RUN chown -Rv safnari:safnari $HOME
-USER safnari:safnari
+COPY . $BUILD_HOME/nsi-dds
+#RUN groupadd -r safnari && useradd --home-dir $BUILD_HOME --no-log-init -r -g safnari safnari
+#RUN chown -Rv safnari:safnari $BUILD_HOME
+#USER safnari:safnari
 
-WORKDIR $HOME/nsi-dds
-#RUN mvn -B clean install -Dmaven.test.skip=true -Ddocker.nocache
-RUN mvn -B clean install -Dmaven.test.skip=true
-RUN cp -Rv config target/dds.jar $HOME
-COPY m2_settings.xml $HOME/.m2/settings.xml
-RUN mvn -B deploy -Dmaven.test.skip=true
+WORKDIR $BUILD_HOME/nsi-dds
+ 
+# package our application code
+RUN mvn clean install -Dmaven.test.skip=true -Ddocker.nocache
+ 
+# the second stage of our build will use open jdk 8 on alpine 3.9
+FROM openjdk:8-jre-alpine3.9
 
-#CMD /usr/bin/java \
+ENV BUILD_HOME /home/safnari
+ 
+# copy only the artifacts we need from the first stage and discard the rest
+COPY --from=MAVEN_BUILD $BUILD_HOME/nsi-dds/target/dds.jar /dds.jar
+COPY --from=MAVEN_BUILD $BUILD_HOME/nsi-dds/config /tmp
+
+# expose port and set the startup command to execute the jar
+EXPOSE 8401/tcp
 CMD java \
     -Xmx1024m -Djava.net.preferIPv4Stack=true  \
     -Dcom.sun.xml.bind.v2.runtime.JAXBContextImpl.fastBoot=true \
-    -Djava.util.logging.config.file=$HOME/config/logging.properties \
-    -Dbasedir=$HOME \
-    -jar $HOME/dds.jar
+    -Djava.util.logging.config.file=/config/logging.properties \
+    -Dbasedir=/ \
+    -jar /dds.jar
