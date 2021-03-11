@@ -28,17 +28,19 @@ RUN mvn clean install -Dmaven.test.skip=true -Ddocker.nocache
 # the second stage of our build will use open jdk 8 on alpine 3.9
 FROM openjdk:8-jre-alpine3.9
 
-ENV BUILD_HOME /home/safnari
+ENV DDS_BUILD_HOME /home/safnari/nsi-dds
+
+WORKDIR /nsi-dds
  
 # copy only the artifacts we need from the first stage and discard the rest
-COPY --from=MAVEN_BUILD $BUILD_HOME/nsi-dds/target/dds.jar /dds.jar
-COPY --from=MAVEN_BUILD $BUILD_HOME/nsi-dds/config /tmp
+COPY --from=MAVEN_BUILD $DDS_BUILD_HOME/target/dds.jar .
+COPY --from=MAVEN_BUILD $DDS_BUILD_HOME/config ./config
 
 # expose port and set the startup command to execute the jar
 EXPOSE 8401/tcp
 CMD java \
     -Xmx1024m -Djava.net.preferIPv4Stack=true  \
     -Dcom.sun.xml.bind.v2.runtime.JAXBContextImpl.fastBoot=true \
-    -Djava.util.logging.config.file=/config/logging.properties \
-    -Dbasedir=/ \
-    -jar /dds.jar
+    -Djava.util.logging.config.file=/nsi-dds/config/logging.properties \
+    -Dbasedir=/nsi-dds \
+    -jar /nsi-dds/dds.jar
