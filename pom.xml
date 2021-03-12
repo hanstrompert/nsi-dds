@@ -7,9 +7,9 @@
     <version>1.0.12-SNAPSHOT</version>
     <packaging>jar</packaging>
     <scm>
-        <developerConnection>scm:git:https://github.com/hanstrompert/nsi-dds.git</developerConnection>
-      <tag>nsi-dds-1.0.7</tag>
-  </scm>
+      <developerConnection>scm:git:https://github.com/hanstrompert/nsi-dds.git</developerConnection>
+      <tag>HEAD</tag>
+    </scm>
 
     <properties>
         <project.scm.id>github</project.scm.id>  
