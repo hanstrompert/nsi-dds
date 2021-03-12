@@ -4,11 +4,11 @@
 
     <groupId>net.es.nsi</groupId>
     <artifactId>nsi-dds</artifactId>
-    <version>1.0.16</version>
+    <version>1.0.17-SNAPSHOT</version>
     <packaging>jar</packaging>
     <scm>
       <developerConnection>scm:git:https://github.com/hanstrompert/nsi-dds.git</developerConnection>
-      <tag>1.0.16</tag>
+      <tag>HEAD</tag>
     </scm>
 
     <properties>
