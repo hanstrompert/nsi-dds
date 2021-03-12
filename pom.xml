@@ -259,11 +259,13 @@
                 <configuration>
                     <generateGitPropertiesFile>true</generateGitPropertiesFile>
                     <generateGitPropertiesFilename>src/main/resources/git.properties</generateGitPropertiesFilename>
+<!--
                     <includeOnlyProperties>
                         <includeOnlyProperty>^git.build.(time|version)$</includeOnlyProperty>
                         <includeOnlyProperty>^git.commit.id.(abbrev|full)$</includeOnlyProperty>
                     </includeOnlyProperties>
-                    <commitIdGenerationMode>full</commitIdGenerationMode>
+-->
+                    <commitIdGenerationMode>flat</commitIdGenerationMode>
                     <gitDescribe>
                       <tags>true</tags>
                     </gitDescribe>
