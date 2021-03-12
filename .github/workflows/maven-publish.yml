@@ -52,6 +52,6 @@ jobs:
       run: mvn --batch-mode --file pom.xml --define maven.test.skip=true clean install
       
     - name: Publish to GitHub Packages Apache Maven
-      run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
+      run: mvn --define maven.test.skip=true deploy -s $GITHUB_WORKSPACE/settings.xml 
       env:
         GITHUB_TOKEN: ${{ github.token }}
